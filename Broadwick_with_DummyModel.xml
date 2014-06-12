@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <logs>
+	<console>
+	    <level>info</level> 
+	    <pattern>[%thread] %-5level %msg %n</pattern>
+	</console>
+	<file>
+	    <name>epic.broadwickexamples.log</name> 
+	    <level>info</level> 
+	    <pattern>[%thread] %-5level %msg %n</pattern>
+	    <overwrite>true</overwrite>
+	</file>
+    </logs>
+   
+    <models>
+	<model id="Broadwick Project">
+	    <classname>epic.broadwickexamples.DummyModel</classname>
+	    <parameter id="stringParam" value="ABCDEFG"/>
+	    <parameter id="intParam" value="1"/>
+	    <parameter id="doubleParam" value="2.0"/>
+	</model>
+    </models>
+</project>
+
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <logs>
+	<console>
+	    <level>info</level> 
+	    <pattern>[%thread] %-5level %msg %n</pattern>
+	</console>
+	<file>
+	    <name>epic.basic.basicsirmodel.log</name> 
+	    <level>info</level> 
+	    <pattern>[%thread] %-5level %msg %n</pattern>
+	    <overwrite>true</overwrite>
+	</file>
+    </logs>
+   
+    <models>
+	<model id="Broadwick Project">
+	    <classname>epic.basic.BasicSIRModel</classname>
+	    <parameter id="filename" value="basicsir_test"/>
+	    <parameter id="verbose" value="false"/>
+	    <parameter id="maxTime" value="1000000"/>
+	    <parameter id="tauStep" value="0"/>
+	    <parameter id="N" value="1000"/>
+	    <parameter id="initI" value="1"/>
+	    <parameter id="beta" value="0.1"/>
+	    <parameter id="gamma" value="0.05"/>
+	</model>
+    </models>
+</project>
+
+
