@@ -417,11 +417,14 @@ public class NetworkOfIndividualsModel extends IndividualBasedModel {
                     // how many infected contacts do I have ?
                     List<Agent> nn          = getIncomingNeighboursWithState( (IndividualNetworkAgent)toAgent, IndividualStateType.INFECTED);
                     int numInfectedContacts = nn.size();
-                    int numContacts         = network.getPredecessorCount((IndividualNetworkAgent)toAgent );
+                    //int numContacts         = network.getPredecessorCount((IndividualNetworkAgent)toAgent );
                     
                     // what is the force of infection pointing to me ?
+                    
+                    // this is the formula for complete mixing (non-network)
                     //rr        = rates.getRate(etype) * (double)numS * (double)numI / (double)getN();
-                    double rr   = getRates().getRate(etype) * (double)numInfectedContacts / (double)numContacts;
+                    
+                    double rr   = getRates().getRate(etype) * (double)numInfectedContacts;
                     
                     // do not specify the from agent yet, this is done in performEvent
                     IndividualSimulationState infector = new IndividualSimulationState(null, fromState);

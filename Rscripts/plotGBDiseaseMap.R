@@ -17,7 +17,7 @@ library(mapproj)
 
 plotGBDiseaseMap <- function( locations=locations, links=links, 
 						stateNames=c("SUSCEPTIBLE","EXPOSED","INFECTED","RECOVERED","IMMUNE"),
-						stateCols =c(NA, "orange", "red", "blue", "green"),
+						stateCols =c("white", "yellow", "red", "blue", "green"),
 						onlyPoints=FALSE, showLinks=TRUE, showLegend=!onlyPoints,
 						return.coords=FALSE, title="" ) {
 
@@ -66,9 +66,9 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 	# load locations with states and links
 
 	# obviously change this path to be for your computer.
-	path 			 <- "NetBeansProjects//BroadwickExamples//"
+	path 			 <- "NetBeansProjects//BroadwickExamples//networkTest//"
 
-	name			 <- "individualnet_test"
+	name			 <- "UK_example"
 
 	##################################################################################
 	# load the original network, this does not change over time in this example anyway
@@ -97,10 +97,10 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 		###############
 		# plot the map
 		###############
-		plotGBDiseaseMap( locations=locationsWithState, links=links, showLinks=TRUE, title=fnames[i])
+		plotGBDiseaseMap( locations=locationsWithState, links=links, showLinks=TRUE, title=fnames[i], onlyPoints=(i>1) )
 
 		# pause
-		Sys.sleep(0.01)	
+		Sys.sleep(0.1)	
 	}
 
 	

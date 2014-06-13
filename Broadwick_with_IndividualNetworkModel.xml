@@ -16,17 +16,18 @@
     <models>
 	<model id="Broadwick Project">
 	    <classname>epic.network.IndividualNetworkModel</classname>
-	    <parameter id="filename" value="individualnet_test"/>
+	    <parameter id="filename" value="networkTest//UK_example"/>
 	    <parameter id="verbose" value="false"/>
 	    <parameter id="maxTime" value="1000000"/>
 	    <parameter id="tauStep" value="0"/>
-	    <parameter id="modelType" value="SIR"/>
+	    <parameter id="modelType" value="SEIR"/>
 	    <parameter id="networkType" value="GENERAL"/>
 	    <parameter id="locationsFile" value="example_UK_cities.csv"/>
 	    <parameter id="linksFile" value="example_UK_cities_links.csv"/>
 	    <parameter id="locationType" value="LATLONG"/>
 	    <parameter id="initI" value="1"/>
-	    <parameter id="beta" value="0.2"/>
+	    <parameter id="alpha" value="0.5"/>
+	    <parameter id="beta" value="0.1"/>
 	    <parameter id="gamma" value="0.05"/>
 	</model>
     </models>
