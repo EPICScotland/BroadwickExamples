@@ -237,19 +237,21 @@ public class IndividualNetworkModel extends Model {
         // read in seed from xml file
         // if no seed present then generate one
         // and re-seed with this (so that you know what it is).
-        // note that new RNG() will return the static random number generator as created in simulator
-        
+        int seed;
         try {
-            int seed = this.getParameterValueAsInteger("seed");
+            seed = this.getParameterValueAsInteger("seed");
             simulator.setRngSeed(seed);
             //log.info("Seed read in from xml = "+seed);
             //log.info("Seed from rng = "+(new RNG()).getSeed());
+            random = new RNG();
+            random.seed(seed);
         } catch (Exception e) {
             log.info("Seed not set in xml, using own value");
-            
+            random  = new RNG();
+            seed    = (new RNG()).getInteger(0, 9999999);
+            random.seed(seed);
+            simulator.setRngSeed(seed);
         }
-        random = new RNG();
-        log.info("Seed from rng = "+random.getSeed());
         
         // add controller, this stops the simulation after a max time is reached, or no more infecteds, or all recovered        
         // read in maxTime from xml file
@@ -315,15 +317,13 @@ public class IndividualNetworkModel extends Model {
         
         //simulation parameters
         
-        log.info("seed\t= "+random.getSeed());
+        log.info("seed\t= "+seed);
         log.info("maxTime\t= "+((IndividualSIRController)simulator.getController()).getMaxTime());
         log.info("tauStep\t= "+tauStep);
         
         // model paramters
         log.info("N\t= "+((SIRAmountManager)amountManager).getModel().getN());
         log.info("initI\t= "+((SIRAmountManager)amountManager).getModel().getNumberOfAgentsInState(IndividualStateType.INFECTED));
-        //log.info("beta\t= "+((SIRAmountManager)amountManager).getModel().stateRates[0]);
-        //log.info("gamma\t= "+((SIRAmountManager)amountManager).getModel().stateRates[1]);
         
         // add first events to kernel
         ((SIRAmountManager)amountManager).initialiseTransitionKernelWithFirstEvents();

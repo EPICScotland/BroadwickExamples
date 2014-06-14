@@ -10,7 +10,7 @@ import broadwick.model.Model;
 import broadwick.stochastic.*;
 import broadwick.stochastic.algorithms.*;
 import broadwick.rng.*;
-import broadwick.rng.RNG.Generator;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -102,15 +102,16 @@ public class BasicSIRModel extends Model {
         // read in seed from xml file
         // if no seed present then generate one
         // and re-seed with this (so that you know what it is).
-        // note that new RNG() will return the static random number generator as created in simulator
+        int seed;
         try {
-            int seed = this.getParameterValueAsInteger("seed");
+            seed = this.getParameterValueAsInteger("seed");
             simulator.setRngSeed(seed);
             //log.info("Seed read in from xml = "+seed);
             //log.info("Seed from rng = "+(new RNG()).getSeed());
         } catch (Exception e) {
             log.info("Seed not set in xml, using own value");
-            log.info("Seed from rng = "+(new RNG()).getSeed());
+            seed = (new RNG()).getInteger(0, 9999999);
+            simulator.setRngSeed(seed);
         }
         
         //////////////////////////////////////////////////////////////////
@@ -147,7 +148,7 @@ public class BasicSIRModel extends Model {
         
         //simulation parameters
         
-        log.info("seed\t= "+(new RNG()).getSeed());
+        log.info("seed\t= "+seed);
         log.info("maxTime\t= "+((BasicSIRController)simulator.getController()).getMaxTime());
         log.info("tauStep\t= "+tauStep);
         

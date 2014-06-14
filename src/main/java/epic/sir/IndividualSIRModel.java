@@ -15,7 +15,6 @@ import broadwick.stochastic.StochasticSimulator;
 import broadwick.stochastic.TransitionKernel;
 import broadwick.stochastic.algorithms.GillespieSimple;
 import broadwick.stochastic.algorithms.TauLeapingFixedStep;
-//import epic.basic.BasicController;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IndividualSIRModel extends Model {
     
-    static RNG          random;
+    //static RNG          random;
     
     StochasticSimulator simulator;
     TransitionKernel    kernel;
@@ -173,16 +172,17 @@ public class IndividualSIRModel extends Model {
         // read in seed from xml file
         // if no seed present then generate one
         // and re-seed with this (so that you know what it is).
-        // note that new RNG() will return the static random number generator as created in simulator
+        int seed;
         try {
-            int seed = this.getParameterValueAsInteger("seed");
+            seed = this.getParameterValueAsInteger("seed");
             simulator.setRngSeed(seed);
-            log.info("Seed read in from xml = "+seed);
+            //log.info("Seed read in from xml = "+seed);
+            //log.info("Seed from rng = "+(new RNG()).getSeed());
         } catch (Exception e) {
             log.info("Seed not set in xml, using own value");
+            seed = (new RNG()).getInteger(0, 9999999);
+            simulator.setRngSeed(seed);
         }
-        random = new RNG();
-        log.info("Seed from rng = "+random.getSeed());
         
         //////////////////////////////////////////////////////////////////
         // INITIALISE OBSERVER
@@ -218,15 +218,13 @@ public class IndividualSIRModel extends Model {
         
         //simulation parameters
         
-        log.info("seed\t= "+(random).getSeed());
+        log.info("seed\t= "+seed);
         log.info("maxTime\t= "+((IndividualSIRController)simulator.getController()).getMaxTime());
         log.info("tauStep\t= "+tauStep);
         
         // model paramters
         log.info("N\t= "+((SIRAmountManager)amountManager).getModel().getN());
         log.info("initI\t= "+((SIRAmountManager)amountManager).getModel().getNumberOfAgentsInState(IndividualStateType.INFECTED));
-        //log.info("beta\t= "+((SIRAmountManager)amountManager).getModel().stateRates[0]);
-        //log.info("gamma\t= "+((SIRAmountManager)amountManager).getModel().stateRates[1]);
         
         // add first events to kernel
         ((SIRAmountManager)amountManager).initialiseTransitionKernelWithFirstEvents();
