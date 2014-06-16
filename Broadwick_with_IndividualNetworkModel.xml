@@ -16,7 +16,8 @@
     <models>
 	<model id="Broadwick Project">
 	    <classname>epic.network.IndividualNetworkModel</classname>
-	    <parameter id="filename" value="networkTest//UK_example"/>
+	    <parameter id="seed" value="12349"/>
+	    <parameter id="filename" value="individualnetwork_test"/>
 	    <parameter id="verbose" value="false"/>
 	    <parameter id="maxTime" value="1000000"/>
 	    <parameter id="tauStep" value="0"/>

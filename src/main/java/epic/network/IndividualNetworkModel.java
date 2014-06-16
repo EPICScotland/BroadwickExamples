@@ -15,8 +15,10 @@ import broadwick.stochastic.StochasticSimulator;
 import broadwick.stochastic.TransitionKernel;
 import broadwick.stochastic.algorithms.GillespieSimple;
 import broadwick.stochastic.algorithms.TauLeapingFixedStep;
+import epic.sir.IndividualBasedModel;
 
 import epic.sir.IndividualSIRController;
+import epic.sir.IndividualSIRModel;
 import epic.sir.IndividualSIRObserver;
 import epic.sir.IndividualStateType;
 import epic.sir.SIRAmountManager;
@@ -42,8 +44,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class IndividualNetworkModel extends Model {
-    
-    static RNG          random = null;
     
     StochasticSimulator simulator;
     TransitionKernel    kernel;
@@ -102,7 +102,7 @@ public class IndividualNetworkModel extends Model {
             if ( rates.getAllowedStates().contains(IndividualStateType.EXPOSED) ) {
                 // S -> E and E -> I
                 rates.setRate(IndividualStateType.SUSCEPTIBLE, IndividualStateType.EXPOSED, beta);
-                rates.setRate(IndividualStateType.INFECTED, IndividualStateType.EXPOSED, beta);
+                //rates.setRate(IndividualStateType.INFECTED, IndividualStateType.EXPOSED, beta);
             } else {
                 // S -> I
                 rates.setRate(IndividualStateType.SUSCEPTIBLE, IndividualStateType.INFECTED, beta);
@@ -234,7 +234,7 @@ public class IndividualNetworkModel extends Model {
         // so now all this is messed up
         // need to do it earlier in the initialisation process
         
-        // read in seed from xml file
+                // read in seed from xml file
         // if no seed present then generate one
         // and re-seed with this (so that you know what it is).
         int seed;
@@ -243,13 +243,15 @@ public class IndividualNetworkModel extends Model {
             simulator.setRngSeed(seed);
             //log.info("Seed read in from xml = "+seed);
             //log.info("Seed from rng = "+(new RNG()).getSeed());
-            random = new RNG();
+            RNG random  = new RNG();
             random.seed(seed);
+            IndividualBasedModel.setRandom(random);
         } catch (Exception e) {
             log.info("Seed not set in xml, using own value");
-            random  = new RNG();
-            seed    = (new RNG()).getInteger(0, 9999999);
+            RNG random  = new RNG();
+            seed        = (random).getInteger(0, 9999999);
             random.seed(seed);
+            IndividualBasedModel.setRandom(random);
             simulator.setRngSeed(seed);
         }
         

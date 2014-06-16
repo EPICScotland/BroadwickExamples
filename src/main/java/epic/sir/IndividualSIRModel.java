@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IndividualSIRModel extends Model {
     
-    //static RNG          random;
+    
     
     StochasticSimulator simulator;
     TransitionKernel    kernel;
@@ -93,7 +93,7 @@ public class IndividualSIRModel extends Model {
             if ( rates.getAllowedStates().contains(IndividualStateType.EXPOSED) ) {
                 // S -> E and E -> I
                 rates.setRate(IndividualStateType.SUSCEPTIBLE, IndividualStateType.EXPOSED, beta);
-                rates.setRate(IndividualStateType.INFECTED, IndividualStateType.EXPOSED, beta);
+                //rates.setRate(IndividualStateType.INFECTED, IndividualStateType.EXPOSED, beta);
             } else {
                 // S -> I
                 rates.setRate(IndividualStateType.SUSCEPTIBLE, IndividualStateType.INFECTED, beta);
@@ -178,9 +178,13 @@ public class IndividualSIRModel extends Model {
             simulator.setRngSeed(seed);
             //log.info("Seed read in from xml = "+seed);
             //log.info("Seed from rng = "+(new RNG()).getSeed());
+            IndividualBasedModel.random = new RNG();
+            IndividualBasedModel.random.seed(seed);
         } catch (Exception e) {
             log.info("Seed not set in xml, using own value");
-            seed = (new RNG()).getInteger(0, 9999999);
+            IndividualBasedModel.random  = new RNG();
+            seed    = (new RNG()).getInteger(0, 9999999);
+            IndividualBasedModel.random.seed(seed);
             simulator.setRngSeed(seed);
         }
         

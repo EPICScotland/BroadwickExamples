@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * Class to represent the possible allowed states of individuals, and the transition rates between these states.
  * @author Samantha Lycett
- * @version 9 June 2014
+ * @version 16 June 2014
  */
 @Slf4j
 public class SIRRates {
@@ -128,7 +128,7 @@ public class SIRRates {
         }
         eventNames[0][1] = SIREventType.EXPOSURE;
         eventNames[1][2] = SIREventType.BECOME_INFECTIOUS;
-        eventNames[2][1] = SIREventType.INFECTION;
+        //eventNames[2][1] = SIREventType.INFECTION;
         eventNames[2][0] = SIREventType.SUSCEPTIBILITY;
     }
     
@@ -148,7 +148,6 @@ public class SIRRates {
         }
         eventNames[0][1] = SIREventType.INFECTION;
         eventNames[1][2] = SIREventType.RECOVERY;
-        //eventNames[1][1] = SIREventType.INFECTION;
         eventNames[2][0] = SIREventType.SUSCEPTIBILITY;
     }
     
@@ -190,7 +189,7 @@ public class SIRRates {
         }
         eventNames[0][1] = SIREventType.EXPOSURE;               // S -> E
         eventNames[1][2] = SIREventType.BECOME_INFECTIOUS;      // E -> I
-        eventNames[2][1] = SIREventType.INFECTION;              // I -> E (diff individuals)
+        //eventNames[2][1] = SIREventType.INFECTION;              // I -> E (diff individuals)
         eventNames[2][3] = SIREventType.RECOVERY;               // I -> R
         eventNames[3][0] = SIREventType.SUSCEPTIBILITY;         // R -> S
     }
@@ -213,7 +212,7 @@ public class SIRRates {
         }
         eventNames[0][1] = SIREventType.EXPOSURE;               // S -> E
         eventNames[1][2] = SIREventType.BECOME_INFECTIOUS;      // E -> I
-        eventNames[2][1] = SIREventType.INFECTION;              // I -> E (diff individuals)
+        //eventNames[2][1] = SIREventType.INFECTION;              // I -> E (diff individuals)
         eventNames[2][3] = SIREventType.RECOVERY;               // I -> R
         //eventNames[3][0] = SIREventType.SUSCEPTIBILITY;         // R -> S
         eventNames[3][4] = SIREventType.IMMUNITY;               // R -> M

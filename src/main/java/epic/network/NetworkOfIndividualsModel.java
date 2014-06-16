@@ -115,7 +115,7 @@ public class NetworkOfIndividualsModel extends IndividualBasedModel {
         for (int i = 0; i < (N-1); i++) {
             for (int j = (i+1); j < N; j++) {
                 
-                double x = ( IndividualNetworkModel.random ).getDouble();
+                double x = ( IndividualBasedModel.getRandom() ).getDouble();
                 if (x < p) {
                     Edge e = new Edge(vertices[i], vertices[j]);
                     network.addEdge(e, vertices[i], vertices[j]);
@@ -267,12 +267,13 @@ public class NetworkOfIndividualsModel extends IndividualBasedModel {
         
         // this is very inefficient, but it is only done once at the start of the whole thing
         Collection nodes    = network.getVertices();
-        List chosen         = ( IndividualNetworkModel.random ).selectManyOf(nodes, initI);
+        List chosen         = ( IndividualBasedModel.getRandom() ).selectManyOf(nodes, initI);
         
         List<Agent> agents = new ArrayList();
         for (IndividualNetworkAgent a : network.getVertices()) {
             if (chosen.contains(a)) {
-                a.setState((IndividualStateType.INFECTED).toString());    
+                a.setState((IndividualStateType.INFECTED).toString());
+                log.info("Initialising infection from "+a.toNameLocation());
             }
             agents.add(a);
         }
@@ -552,7 +553,7 @@ public class NetworkOfIndividualsModel extends IndividualBasedModel {
                     // choose an infected neighbour to be the infector
                     List<Agent> nn = getIncomingNeighboursWithState((IndividualNetworkAgent)toAgent, IndividualStateType.INFECTED);
                     
-                    fromAgent = (Agent)( IndividualNetworkModel.random ).selectOneOf(nn);
+                    fromAgent = (Agent)( IndividualBasedModel.getRandom() ).selectOneOf(nn);
                     
                     IndividualSimulationState infector = new IndividualSimulationState(fromAgent, IndividualStateType.INFECTED );
                     reaction.setInitialState(infector);

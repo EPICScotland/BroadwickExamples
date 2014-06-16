@@ -19,13 +19,20 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 						stateNames=c("SUSCEPTIBLE","EXPOSED","INFECTED","RECOVERED","IMMUNE"),
 						stateCols =c("white", "yellow", "red", "blue", "green"),
 						onlyPoints=FALSE, showLinks=TRUE, showLegend=!onlyPoints,
-						return.coords=FALSE, title="" ) {
+						return.coords=FALSE, title="", save.plot=FALSE, save.path="" ) {
 
 	fromLoc	 <- match(links[,2], locations$Location)
 	toLoc		 <- match(links[,6], locations$Location)
 
 	orientation <- c(90,0,0)
 	projection="mercator"
+
+	if (save.plot) {
+		imageName <- gsub("\\.txt","",title)
+		imageName <- paste(save.path,imageName,"_map.png",sep="")
+		png( file=imageName, height=2400, width=1800, res=300)
+	}
+
 	
 	# plot the map
 	if (!onlyPoints) {
@@ -54,6 +61,10 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 		title(title)
 	}
 
+	if (save.plot) {
+		dev.off()
+	}
+
 	if (return.coords) {
 		return( coord )
 	}
@@ -68,7 +79,7 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 	# obviously change this path to be for your computer.
 	path 			 <- "NetBeansProjects//BroadwickExamples//networkTest//"
 
-	name			 <- "UK_example"
+	name			 <- "individualnetwork_test" #"UK_example"
 
 	##################################################################################
 	# load the original network, this does not change over time in this example anyway
@@ -86,7 +97,8 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 			 fnames, 
 			 paste(name,"_individualStates_final.txt",sep="") )
 
-	
+
+	# DISPLAY MAP IMAGES	
 	for (i in 1:length(fnames)) {
 
 		###########################################
@@ -103,5 +115,20 @@ plotGBDiseaseMap <- function( locations=locations, links=links,
 		Sys.sleep(0.1)	
 	}
 
+	# SAVE MAP IMAGES
+	for (i in 1:length(fnames)) {
+
+		###########################################
+		# load the infection state of the locations
+		###########################################
+		locationsWithState <- read.table( paste(path,fnames[i],sep=""), header=TRUE, sep=",")
 	
+		###############
+		# plot the map
+		###############
+		plotGBDiseaseMap( locations=locationsWithState, links=links, showLinks=TRUE, title=fnames[i], 
+			onlyPoints=FALSE, save.plot=TRUE, save.path=paste(path,"images//",sep="") )
+
+	}
+
 

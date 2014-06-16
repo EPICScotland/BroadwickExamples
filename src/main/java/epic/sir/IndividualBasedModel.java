@@ -17,12 +17,24 @@ import lombok.extern.slf4j.Slf4j;
 /**
  *
  * @author Samantha Lycett
- * @version 5 June 2014
+ * @version 16 June 2014
  */
 @Slf4j
 public class IndividualBasedModel {
     
-    RNG                         random          = new RNG();            // returns the singleton
+    static RNG          random = null;
+    
+    public static void setRandom(RNG rnd) {
+        random = rnd;
+    }
+    
+    public static RNG getRandom() {
+        return random;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    
+    
     List<Agent>                 agents          = new ArrayList<>();
     List<List<Agent>>           agentsInStates  = new ArrayList<>();
     List<IndividualStateType>   allowedStates;
