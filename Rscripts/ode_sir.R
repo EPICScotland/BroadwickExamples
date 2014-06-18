@@ -62,3 +62,42 @@ if (doSIRExample) {
 
 }
 
+
+doSIRExample2 <- FALSE
+
+if (doSIRExample2) {
+
+	# define parameters (order is important)
+	parameters <- c(b=0.1/1000, y=0.05)
+	state      <- c(S=999, I=1, R=0)
+	times      <- seq(0, 400, by = 0.5)
+
+
+	# run a model
+	res <- ode(y = state, times = times, func = SIR, parms = parameters)
+
+
+
+	path <- "C://Users//Samantha Lycett//Documents//NetBeansProjects//compare_with_r//"
+	name <- "Rgenerated_SIR_with_ODE_2"
+
+	# plot model
+	mainTxt <- paste("N=1000","b=",parameters[1],"y=",parameters[2])
+	plot(res[,1], res[,2], type="l", ylim=c(0,1000), xlab="Time", ylab="Number", main=mainTxt, col="orange")
+	lines(res[,1], res[,3], col="red")
+	lines(res[,1], res[,4], col="blue")
+	legend("left",c("S","I","R"),col=c("orange","red","blue"),lty=1,bty="n")
+
+	png( file=paste(path,name,".png",sep=""), height=1800, width=1800, res=300)
+	mainTxt <- paste("N=1000","b=",parameters[1],"y=",parameters[2])
+	plot(res[,1], res[,2], type="l", ylim=c(0,1000), xlab="Time", ylab="Number", main=mainTxt, col="orange")
+	lines(res[,1], res[,3], col="red")
+	lines(res[,1], res[,4], col="blue")
+	dev.off()
+
+	fname<- paste(path,name,".csv",sep="")
+	write.table(res, file=fname, sep=",", col.names=TRUE, row.names=FALSE)
+
+}
+
+
